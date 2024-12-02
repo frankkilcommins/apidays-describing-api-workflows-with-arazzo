@@ -23,7 +23,7 @@
             "parent": "",
             "name": "Pets API",
             "type": "apiUrl",
-            "slug": "Pets",
+            "slug": "pets",
             "contentUrl": "https://api.swaggerhub.com/apis/frank-kilcommins/Pets/1.0.0/swagger.json"
         },
         {
@@ -31,7 +31,7 @@
             "parent": "",
             "name": "Adoptions API",
             "type": "apiUrl",
-            "slug": "Adoptions",
+            "slug": "adoptions",
             "contentUrl": "https://api.swaggerhub.com/apis/frank-kilcommins/Adoptions/1.0.0/swagger.json"
         }
     ]
