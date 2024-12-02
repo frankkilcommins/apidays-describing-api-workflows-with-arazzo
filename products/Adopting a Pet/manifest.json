@@ -1,11 +1,11 @@
 {
     "productMetadata": {
         "description": "This product gives the ability to programmatically embedded a Pet adoption workflow into your application 🐶",
-        "slug": "pet-adoptions",
+        "slug": "adopt-a-pet",
         "public": true,
         "hidden": false,
-        "logo": "images/AdoptionsAPI.png",
-        "logoDark": "",
+        "logo": "images/Adopting-a-Pet.png",
+        "logoDark": "images/Adopting-a-Pet.png",
         "autoPublish": true,
         "validateAPIs": true
     },

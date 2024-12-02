@@ -62,5 +62,5 @@ This workflow provides developers with a structured way to adopt a pet using the
 
 ## Graphical Representation of the Workflow
 
-![adopt-a-pet-1.png](./images/embedded/adopt-a-pet-1.png)
+![adopting-a-pet-1.png](./images/embedded/adopting-a-pet-1.png)
 
