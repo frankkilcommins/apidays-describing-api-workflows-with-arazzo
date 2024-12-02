@@ -4,10 +4,11 @@ This repo contains examples of using Arazzo in the wild. It focuses on working i
 
 This sample repo showcases how to use the Arazzo Specification GPT, Spectral, VSCode, and Itarazzo to generate stellar API guides published to a SwaggerHub Portal instance. This is focused on showcasing emerging tooling to get started with the new [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html) from the [OpenAPI Initiative](https://www.openapis.org/).
 
-You can choose your own adventure:
+**You can choose your own adventure:**
 
-- 💵 A `Buy Now Pay Later` workflow - go to the [main](https://github.com/frankkilcommins/apidays-describing-api-workflows-with-arazzo) branch
-- 🐶 A `Adopt a Pet` workflow - go to the [pet adoptions](https://github.com/frankkilcommins/apidays-describing-api-workflows-with-arazzo/tree/pet-adoptions) branch
+- 🐶 `Adopt a Pet` workflow - **this branch**
+- 💵 `Buy Now Pay Later` workflow - go to the [main](https://github.com/frankkilcommins/apidays-describing-api-workflows-with-arazzo) branch
+
 
 ## Tools
 
