@@ -1,0 +1,38 @@
+{
+    "productMetadata": {
+        "description": "This product gives the ability to programmatically embedded a Pet adoption workflow into your application 🐶",
+        "slug": "pet-adoptions",
+        "public": true,
+        "hidden": false,
+        "logo": "images/AdoptionsAPI.png",
+        "logoDark": "",
+        "autoPublish": true,
+        "validateAPIs": true
+    },
+    "contentMetadata": [
+        {
+            "order": 0,
+            "parent": "",
+            "name": "Getting Started with Pet Adoptions",
+            "slug": "getting-started-with-pet-adoptions",
+            "type": "markdown",
+            "contentUrl": "Getting-Started-with-Pet-Adoptions.md"
+        },
+        {
+            "order": 1,
+            "parent": "",
+            "name": "Pets API",
+            "type": "apiUrl",
+            "slug": "Pets",
+            "contentUrl": "https://api.swaggerhub.com/apis/frank-kilcommins/Pets/1.0.0/swagger.json"
+        },
+        {
+            "order": 2,
+            "parent": "",
+            "name": "Adoptions API",
+            "type": "apiUrl",
+            "slug": "Adoptions",
+            "contentUrl": "https://api.swaggerhub.com/apis/frank-kilcommins/Adoptions/1.0.0/swagger.json"
+        }
+    ]
+}

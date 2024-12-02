@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Pets API
+  description: >
+    An API for managing and searching our **Pets** inventory. This API is
+    specifically tailored to help the ease of matching a pet which is a suitable
+    candidate for adoption.
+
+    Other useful information related to this API:
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: frank.kilcommins@smartbear.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://host.docker.internal:8086    
+tags:
+  - name: pets
+    description: Everything about your Pets
+paths:
+  /pets:
+    get:
+      tags:
+        - pets
+      summary: Get a list of pets from PetCo stores
+      description: A list of pets with information on their status and location
+      operationId: getPets
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: true
+          schema:
+            type: string
+            description: the adoption status of the pet
+            default: available
+            enum:
+              - available
+              - pending
+              - onhold
+              - adopted
+        - name: location
+          in: query
+          description: the store location of the pet
+          required: true
+          schema:
+            type: string
+            example: Galway
+      responses:
+        '200':
+          description: Get Pets response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pets'
+        '400':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/BadRequest
+        '500':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServerError
+        '503':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServiceUnavailable
+        default:
+          description: Get Pets response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pets'
+    post:
+      tags:
+        - pets
+      summary: Add a pet
+      operationId: postPets
+      requestBody:
+        description: add a new pet
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPet'
+      responses:
+        '201':
+          description: New Pet response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewPet'
+              examples:
+                AddedPet:
+                  value:
+                    id: a76b67cb-7976-4b94-af8e-381688c915ad
+                    name: Toby
+                    location: Galway
+                    status: available
+        '400':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/BadRequest
+        '422':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ValidationError
+        '500':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServerError
+        '503':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServiceUnavailable
+  /pets/{id}:
+    get:
+      tags:
+        - pets
+      summary: Get details of a pet from PetCo stores
+      description: Full details of a pet
+      operationId: getPetById
+      parameters:
+        - name: id
+          in: path
+          description: The pet identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get Pet details response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/BadRequest
+        '404':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/NotFound
+        '500':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServerError
+        '503':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServiceUnavailable
+        default:
+          description: Get Pet details response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+    patch:
+      tags:
+        - pets
+      summary: Update the status of a pet
+      description: Use this operation to update the adoption status of a pet
+      operationId: patchPetStatus
+      parameters:
+        - name: id
+          in: path
+          description: The identifier for the path
+          required: true
+          schema:
+            type: string
+            example: a76b67cb-7976-4b94-af8e-381688c915ad
+      requestBody:
+        description: the new status information
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetStatus'
+        required: true
+      responses:
+        '200':
+          description: Pet status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              examples:
+                UpdatedPet:
+                  value:
+                    id: a76b67cb-7976-4b94-af8e-381688c915ad
+                    name: Toby
+                    location: Galway
+                    status: adopted
+        '400':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/BadRequest
+        '404':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/NotFound
+        '422':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ValidationError
+        '500':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServerError
+        '503':
+          $ref: >-
+            https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServiceUnavailable
+components:
+  schemas:
+    NewPet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: pet name
+          example: Toby
+        location:
+          type: string
+          description: the location of the pet
+          example: Galway
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: the name of the pet
+          example: Rover
+        location:
+          type: string
+          description: the store location housing the pet
+          example: galway
+        id:
+          type: string
+          description: a _guid_ identifier of the pet
+          example: c76b67cb-7976-4b94-af8e-381688c915ae
+        status:
+          type: string
+          description: the adoption status of the pet
+          default: adopted
+          example: adopted
+          enum:
+            - available
+            - pending
+            - onhold
+            - adopted
+    Pets:
+      type: array
+      items:
+        $ref: '#/components/schemas/Pet'
+    PetStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: the adoption status of the pet
+          default: available
+          example: available
+          enum:
+            - available
+            - pending
+            - onhold
+            - adopted
+

@@ -1,0 +1,146 @@
+arazzo: 1.0.0
+info:
+  title: Pet Adoption Workflow
+  description: >
+    This workflow guides users through the process of adopting a pet that matches specific criteria. It includes searching for available pets, initiating an adoption request, confirming the adoption by updating the pet's status, and verifying that the pet's status has been updated to 'adopted'.
+  version: 1.0.0
+sourceDescriptions:
+  - name: PetsApi
+    url: /itarazzo/specs/pets.openapi.yaml
+    type: openapi
+  - name: AdoptionsApi
+    url: /itarazzo/specs/adoptions.openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: AdoptPetMatchingCriteria
+    summary: Adopt a pet matching specific criteria
+    description: >
+      This workflow facilitates the adoption of a pet by performing the following steps: searching for a pet based on specified criteria, initiating an adoption request, confirming the adoption by updating the pet's status, and verifying that the pet's status has been updated to 'adopted'.
+    inputs:
+      type: object
+      required:
+        - searchCriteria
+        - adopterDetails
+      properties:
+        searchCriteria:
+          type: object
+          description: Criteria to search for available pets.
+          properties:
+            type:
+              type: string
+              description: Type of pet (e.g., dog, cat).
+            breed:
+              type: string
+              description: Breed of the pet.
+            age:
+              type: string
+              description: Age range of the pet.
+            location:
+              type: string
+              description: Location to search for pets.
+        adopterDetails:
+          type: object
+          description: Details of the person adopting the pet.
+          required:
+            - name
+            - contactInformation
+          properties:
+            name:
+              type: string
+              description: Name of the adopter.
+            contactInformation:
+              type: object
+              description: Contact information of the adopter.
+              required:
+                - email
+                - phone
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email address of the adopter.
+                phone:
+                  type: string
+                  description: Phone number of the adopter.
+    steps:
+      - stepId: searchForPet
+        description: Search for pets matching the specified criteria.
+        operationId: $sourceDescriptions.PetsApi.getPets
+        parameters:
+          - name: status
+            in: query
+            value: available
+          - name: location
+            in: query
+            value: galway
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          availablePets: $response.body
+        onSuccess:
+          - name: petsFound
+            type: goto
+            stepId: initiateAdoptionRequest
+            criteria:
+              - condition: $response.body != null
+          - name: noPetsFound
+            type: end
+            criteria:
+              - condition: $response.body == null
+      - stepId: initiateAdoptionRequest
+        description: Initiate an adoption request for the selected pet.
+        operationId: $sourceDescriptions.AdoptionsApi.postAdoption
+        parameters:
+          - name: Authorization
+            in: header
+            value: Bearer someKey
+        requestBody:
+          contentType: application/json
+          payload: |
+            {
+              "petId": "c76b67cb-7976-4b94-af8e-381688c915ae",
+              "adopter": {
+                "name": "{$inputs.adopterDetails.name}",
+                "contactInformation": {
+                  "email": "{$inputs.adopterDetails.contactInformation.email}",
+                  "phone": "{$inputs.adopterDetails.contactInformation.phone}"
+                }
+              }
+            }
+        successCriteria:
+          - condition: $statusCode == 201
+        outputs:
+          adoptionId: $response.body.id
+          adoptedPetId: $response.body.pets[0]
+      - stepId: confirmAdoption
+        description: Confirm the adoption by updating the pet's status to 'adopted'.
+        operationId: $sourceDescriptions.PetsApi.patchPetStatus
+        parameters:
+          - name: id
+            in: path
+            value: "c76b67cb-7976-4b94-af8e-381688c915ae"
+        requestBody:
+          contentType: application/json
+          payload: |
+            {
+              "status": "adopted"
+            }
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          petStatus: $response.body.status
+      - stepId: verifyAdoption
+        description: Verify that the pet's status has been updated to 'adopted'.
+        operationId: $sourceDescriptions.PetsApi.getPetById
+        parameters:
+          - name: id
+            in: path
+            value: "c76b67cb-7976-4b94-af8e-381688c915ae"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          finalPetStatus: $response.body.status
+    outputs:
+      adoptionId: $steps.initiateAdoptionRequest.outputs.adoptionId
+      petId: $steps.initiateAdoptionRequest.outputs.adoptedPetId
+      finalPetStatus: $steps.verifyAdoption.outputs.finalPetStatus

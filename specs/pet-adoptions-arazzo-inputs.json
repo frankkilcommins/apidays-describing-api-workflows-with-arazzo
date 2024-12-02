@@ -1,0 +1,15 @@
+{
+  "searchCriteria": {
+    "type": "dog",
+    "breed": "Golden Retriever",
+    "age": "young",
+    "location": "Galway"
+  },
+  "adopterDetails": {
+    "name": "Jane Doe",
+    "contactInformation": {
+      "email": "jane.doe@example.com",
+      "phone": "123-456-7890"
+    }
+  }
+}
