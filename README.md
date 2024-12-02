@@ -41,8 +41,8 @@ Set up the tools above and/or accounts where required.
 
 The Pet Adoptions workflow we'll create leverages operations exposed by the following APIs:
 
-- **Pets API:** [view JSON](https://api.swaggerhub.com/apis/frank-kilcommins/Pets-API/1.0.0/swagger.json) or [view in SwaggerHub](https://app.swaggerhub.com/apis/frank-kilcommins/Pets-API/1.0.0)
-- **Adoptions API:** [view JSON](https://api.swaggerhub.com/apis/frank-kilcommins/Adoptions-API/1.0.0/swagger.json) or [view in SwaggerHub](https://app.swaggerhub.com/apis/frank-kilcommins/Adoptions-API/1.0.0)
+- **Pets API:** [view JSON](https://api.swaggerhub.com/apis/frank-kilcommins/Pets/1.0.0/swagger.json) or [view in SwaggerHub](https://app.swaggerhub.com/apis/frank-kilcommins/Pets/1.0.0)
+- **Adoptions API:** [view JSON](https://api.swaggerhub.com/apis/frank-kilcommins/Adoptions/1.0.0/swagger.json) or [view in SwaggerHub](https://app.swaggerhub.com/apis/frank-kilcommins/Adoptions/1.0.0)
 
 ## What's currently in our Developer Portal
 
@@ -60,8 +60,8 @@ Rather than starting hand-crafting an Arazzo Document by hand, let's take advant
 
 ```text
 There's are two OpenAPI located at 
-- https://api.swaggerhub.com/apis/frank-kilcommins/Pets-API/1.0.0/swagger.json
-- https://api.swaggerhub.com/apis/frank-kilcommins/Adoptions-API/1.0.0/swagger.json
+- https://api.swaggerhub.com/apis/frank-kilcommins/Pets/1.0.0/swagger.json
+- https://api.swaggerhub.com/apis/frank-kilcommins/Adoptions/1.0.0/swagger.json
 
 I'd like you to process those documents and generate a detailed Arazzo Document for "Adopting a pet matching specific criteria" based on the appropriate endpoints within the APIs above. 
 
